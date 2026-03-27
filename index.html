@@ -21,6 +21,9 @@
 <!-- lax.js -->
 <script src="https://cdn.jsdelivr.net/npm/lax.js"></script>
 
+<!-- Netlify Identity (for CMS login) -->
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
 <style>
 /* ─────────────────────────────
    RESET & TOKENS
@@ -82,7 +85,6 @@ img{display:block;max-width:100%;user-select:none;-webkit-user-select:none}
 /* Logo in nav */
 .nav-logo-img{
   height:52px;width:52px;object-fit:contain;
-  mix-blend-mode:multiply;
   transition:opacity .3s;
   flex-shrink:0
 }
@@ -121,7 +123,7 @@ img{display:block;max-width:100%;user-select:none;-webkit-user-select:none}
   gap:2rem;padding:2rem
 }
 .mobile-menu.open{display:flex}
-.mobile-menu-logo{height:80px;width:80px;object-fit:contain;mix-blend-mode:multiply;margin-bottom:1rem}
+.mobile-menu-logo{height:80px;width:80px;object-fit:contain;margin-bottom:1rem}
 .mobile-menu a{
   font-family:var(--display);font-size:clamp(2rem,7vw,2.8rem);
   font-weight:300;font-style:italic;
@@ -534,7 +536,7 @@ blockquote.philosophy-quote::before{
   flex-wrap:wrap;gap:1rem
 }
 .footer-logo{
-  height:40px;width:40px;object-fit:contain;mix-blend-mode:multiply;opacity:.7
+  height:40px;width:40px;object-fit:contain;opacity:.85
 }
 .footer a{color:var(--text-l);text-decoration:none;transition:color .3s}
 .footer a:hover{color:var(--accent)}
@@ -679,14 +681,14 @@ blockquote.philosophy-quote::before{
   <div class="hero-bg-monogram" id="lax-monogram" aria-hidden="true">LD</div>
 
   <div class="hero-content">
-    <p class="hero-overline">Art Curator &ensp;·&ensp; Art Manager &ensp;·&ensp; Project Coordinator</p>
-    <h1 id="lax-h1">Ludovica<br><em>Benedetta</em><br>Dagna</h1>
+    <p class="hero-overline" id="cms-hero-overline">Art Curator &ensp;·&ensp; Art Manager &ensp;·&ensp; Project Coordinator</p>
+    <h1 id="lax-h1"><span id="cms-hero-name1">Ludovica</span><br><em id="cms-hero-name2">Benedetta</em><br><span id="cms-hero-name3">Dagna</span></h1>
     <p class="hero-role" id="lax-sub">
-      Contemporary Art &nbsp;&mdash;&nbsp; Exhibition Curatorship &nbsp;&mdash;&nbsp; Cultural Mediation
+      <span id="cms-hero-role">Contemporary Art &nbsp;&mdash;&nbsp; Exhibition Curatorship &nbsp;&mdash;&nbsp; Cultural Mediation</span>
     </p>
     <div class="hero-cta-wrap">
-      <a href="#contact" class="hero-cta">Get in Touch</a>
-      <a href="#about" class="hero-cta-alt">Discover More &rarr;</a>
+      <a href="#contact" class="hero-cta" id="cms-hero-cta-primary">Get in Touch</a>
+      <a href="#about" class="hero-cta-alt" id="cms-hero-cta-secondary">Discover More &rarr;</a>
     </div>
   </div>
 
@@ -716,14 +718,14 @@ blockquote.philosophy-quote::before{
 
     <!-- Bio -->
     <div class="about-text">
-      <p class="section-label reveal">The Curator</p>
-      <h2 class="section-title reveal reveal-d1">Curatorship as a Form<br>of <em>Mediation</em></h2>
-      <p class="lead reveal reveal-d2">Ludovica Benedetta Dagna is an Art Curator, Art Manager, and Project Coordinator working in the field of contemporary art.</p>
-      <p class="reveal reveal-d2">Her practice focuses on the development and realization of exhibition projects, overseeing each stage of the curatorial and organizational process — from concept definition and artist selection to the final production of the exhibition. Her approach combines critical sensitivity, curatorial vision, and operational precision.</p>
-      <p class="reveal reveal-d3">Throughout her career she has collaborated with artists, cultural partners, and institutions, developing expertise across curatorial planning, content development, project coordination, and exhibition logistics. Her work is distinguished by a strong commitment to supporting artistic research through carefully structured exhibition narratives.</p>
-      <p class="reveal reveal-d3">Alongside her curatorial activity, she works as an Art Manager, assisting artists in the development, positioning, and communication of their professional practice. She has established international collaborations in digital curation, connecting contemporary art with digital strategy and online representation.</p>
+      <p class="section-label reveal" id="cms-about-label">The Curator</p>
+      <h2 class="section-title reveal reveal-d1" id="cms-about-title">Curatorship as a Form<br>of <em>Mediation</em></h2>
+      <p class="lead reveal reveal-d2" id="cms-about-p1">Ludovica Benedetta Dagna is an Art Curator, Art Manager, and Project Coordinator working in the field of contemporary art.</p>
+      <p class="reveal reveal-d2" id="cms-about-p2">Her practice focuses on the development and realization of exhibition projects, overseeing each stage of the curatorial and organizational process — from concept definition and artist selection to the final production of the exhibition. Her approach combines critical sensitivity, curatorial vision, and operational precision.</p>
+      <p class="reveal reveal-d3" id="cms-about-p3">Throughout her career she has collaborated with artists, cultural partners, and institutions, developing expertise across curatorial planning, content development, project coordination, and exhibition logistics. Her work is distinguished by a strong commitment to supporting artistic research through carefully structured exhibition narratives.</p>
+      <p class="reveal reveal-d3" id="cms-about-p4">Alongside her curatorial activity, she works as an Art Manager, assisting artists in the development, positioning, and communication of their professional practice. She has established international collaborations in digital curation, connecting contemporary art with digital strategy and online representation.</p>
 
-      <div class="about-stats reveal reveal-d4">
+      <div class="about-stats reveal reveal-d4" id="cms-about-stats">
         <div>
           <div class="about-stat-num">IT</div>
           <div class="about-stat-lbl">International Reach</div>
@@ -749,7 +751,7 @@ blockquote.philosophy-quote::before{
 <div class="tags-strip reveal">
   <div class="tags-inner">
     <span class="tags-label">Areas of Practice</span>
-    <div class="tags-list" role="list">
+    <div class="tags-list" role="list" id="cms-tags-list">
       <span class="tag" role="listitem">Exhibition Planning</span>
       <span class="tag" role="listitem">Artist Selection</span>
       <span class="tag" role="listitem">Content Development</span>
@@ -768,11 +770,10 @@ blockquote.philosophy-quote::before{
 ══════════════════════════ -->
 <section id="services" class="services-section" aria-label="Services">
   <div class="services-header reveal">
-    <p class="section-label">What I Do</p>
-    <h2 class="section-title">Services</h2>
+    <p class="section-label" id="cms-services-label">What I Do</p>
+    <h2 class="section-title" id="cms-services-title">Services</h2>
   </div>
-
-  <div class="services-grid">
+  <div class="services-grid" id="cms-services-grid">
 
     <article class="service-card reveal reveal-d1" id="lax-card-1">
       <div class="service-num" aria-hidden="true">01</div>
@@ -812,10 +813,10 @@ blockquote.philosophy-quote::before{
 <section id="philosophy" class="philosophy-section" aria-label="Philosophy">
   <div class="philosophy-bg" id="lax-phil-bg" aria-hidden="true">vision</div>
   <div class="philosophy-inner">
-    <p class="section-label reveal" style="text-align:center">Philosophy</p>
+    <p class="section-label reveal" id="cms-phil-label" style="text-align:center">Philosophy</p>
     <blockquote class="philosophy-quote reveal reveal-d1">
-      Curatorship is not only a cultural and critical practice, but also a form of mediation between concept, production, and visibility — one capable of transforming both physical and digital spaces into meaningful platforms for artistic dialogue.
-      <cite class="philosophy-cite">— Ludovica Benedetta Dagna</cite>
+      <span id="cms-phil-quote">Curatorship is not only a cultural and critical practice, but also a form of mediation between concept, production, and visibility — one capable of transforming both physical and digital spaces into meaningful platforms for artistic dialogue.</span>
+      <cite class="philosophy-cite" id="cms-phil-cite">— Ludovica Benedetta Dagna</cite>
     </blockquote>
   </div>
 </section>
@@ -826,16 +827,16 @@ blockquote.philosophy-quote::before{
 ══════════════════════════ -->
 <section id="contact" aria-label="Contact">
   <div class="contact-inner">
-    <p class="section-label reveal">Get in Touch</p>
-    <h2 class="section-title reveal reveal-d1">Let's Work Together</h2>
+    <p class="section-label reveal" id="cms-contact-label">Get in Touch</p>
+    <h2 class="section-title reveal reveal-d1" id="cms-contact-title">Let's Work Together</h2>
 
     <div class="contact-grid">
 
       <div class="contact-info reveal reveal-d1">
-        <p>For exhibition collaborations, curatorial consultancy, artist management, or digital curation projects, reach out through the form or connect directly on Instagram.</p>
-        <p class="lead">Every project begins with a conversation.</p>
+        <p id="cms-contact-intro">For exhibition collaborations, curatorial consultancy, artist management, or digital curation projects, reach out through the form or connect directly on Instagram.</p>
+        <p class="lead" id="cms-contact-sub">Every project begins with a conversation.</p>
         <div class="contact-links">
-          <a href="https://www.instagram.com/_ludovica_dagna" target="_blank" rel="noopener noreferrer">
+          <a id="cms-contact-ig" href="https://www.instagram.com/_ludovica_dagna" target="_blank" rel="noopener noreferrer">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
               <circle cx="12" cy="12" r="4"/>
@@ -898,11 +899,32 @@ blockquote.philosophy-quote::before{
     <img src="logo.png" alt="LD Digital Atelier" class="footer-logo">
     <span>&copy; 2026 Ludovica Benedetta Dagna. All rights reserved.</span>
     <div class="footer-links">
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="cookie-policy.html">Cookie Policy</a>
       <a href="https://www.instagram.com/_ludovica_dagna" target="_blank" rel="noopener noreferrer">Instagram</a>
     </div>
   </div>
 </footer>
 
+
+<!-- ══════════════════════════
+     COOKIE BANNER
+══════════════════════════ -->
+<div id="cookieBanner" role="dialog" aria-live="polite" aria-label="Cookie notice" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:rgba(26,19,21,.95);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);padding:1.1rem clamp(1.25rem,5vw,3rem)">
+  <div style="max-width:1360px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap">
+    <p style="font-family:'Raleway',sans-serif;font-size:.8rem;font-weight:300;line-height:1.65;margin:0;flex:1;min-width:260px;color:rgba(250,247,246,.85)">
+      This site uses only strictly necessary cookies — no tracking, no advertising.
+      <a href="cookie-policy.html" style="color:#F0C4D0;text-decoration:underline;margin-left:.3rem">Cookie Policy</a>
+      <a href="privacy-policy.html" style="color:#F0C4D0;text-decoration:underline;margin-left:.75rem">Privacy Policy</a>
+    </p>
+    <button
+      onclick="acceptCookies()"
+      style="flex-shrink:0;background:#9B2355;color:#fff;border:none;font-family:'Raleway',sans-serif;font-size:.62rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;padding:.75rem 1.75rem;cursor:pointer;transition:background .3s;white-space:nowrap;min-height:44px"
+      onmouseover="this.style.background='#6E1A3A'"
+      onmouseout="this.style.background='#9B2355'"
+    >Accept</button>
+  </div>
+</div>
 
 <!-- ══════════════════════════
      SCRIPTS
@@ -1050,6 +1072,20 @@ blockquote.philosophy-quote::before{
   });
 })();
 
+/* ── Cookie banner ── */
+(function(){
+  if(!localStorage.getItem('cookieConsent')){
+    document.getElementById('cookieBanner').style.display = 'block';
+  }
+})();
+function acceptCookies(){
+  localStorage.setItem('cookieConsent','accepted');
+  var b = document.getElementById('cookieBanner');
+  b.style.transition = 'opacity .4s';
+  b.style.opacity = '0';
+  setTimeout(function(){ b.style.display = 'none'; }, 400);
+}
+
 /* ── Contact form — Netlify AJAX ── */
 (function(){
   var form = document.querySelector('form[name="contact"]');
@@ -1083,6 +1119,198 @@ blockquote.philosophy-quote::before{
     });
   });
 })();
+</script>
+
+<!-- ══════════════════════════
+     CMS CONTENT LOADER
+     Reads JSON files from /content/ and
+     injects text into the page at runtime.
+     Falls back to hardcoded HTML if fetch fails.
+══════════════════════════ -->
+<script>
+(function(){
+  'use strict';
+
+  function setText(id, value){
+    var el = document.getElementById(id);
+    if(el && value !== undefined && value !== null) el.textContent = value;
+  }
+  function setHTML(id, value){
+    var el = document.getElementById(id);
+    if(el && value !== undefined && value !== null) el.innerHTML = value;
+  }
+  function setAttr(id, attr, value){
+    var el = document.getElementById(id);
+    if(el && value) el.setAttribute(attr, value);
+  }
+
+  /* ── HERO ── */
+  fetch('content/hero.json')
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      setText('cms-hero-overline', d.overline);
+      setText('cms-hero-name1',   d.name_1);
+      setText('cms-hero-name2',   d.name_2);
+      setText('cms-hero-name3',   d.name_3);
+      setText('cms-hero-role',    d.role);
+      setText('cms-hero-cta-primary',   d.cta_primary);
+      setText('cms-hero-cta-secondary', d.cta_secondary);
+    })
+    .catch(function(){});
+
+  /* ── ABOUT ── */
+  fetch('content/about.json')
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      setText('cms-about-label', d.label);
+
+      /* Title: keep the <br> + <em> structure */
+      var titleEl = document.getElementById('cms-about-title');
+      if(titleEl && d.title){
+        /* Replace last word before end with em-wrapped version */
+        var parts = d.title.split(' of ');
+        if(parts.length === 2){
+          titleEl.innerHTML = parts[0] + ' of<br><em>' + parts[1] + '</em>';
+        } else {
+          titleEl.textContent = d.title;
+        }
+      }
+
+      setText('cms-about-p1', d.paragraph_lead);
+      setText('cms-about-p2', d.paragraph_2);
+      setText('cms-about-p3', d.paragraph_3);
+      setText('cms-about-p4', d.paragraph_4);
+
+      /* Stats */
+      if(d.stats && d.stats.length){
+        var statsEl = document.getElementById('cms-about-stats');
+        if(statsEl){
+          statsEl.innerHTML = d.stats.map(function(s){
+            return '<div>'
+              + '<div class="about-stat-num">' + s.num + '</div>'
+              + '<div class="about-stat-lbl">' + s.label + '</div>'
+              + '</div>';
+          }).join('');
+        }
+      }
+    })
+    .catch(function(){});
+
+  /* ── TAGS ── */
+  fetch('content/tags.json')
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      var el = document.getElementById('cms-tags-list');
+      if(el && d.tags && d.tags.length){
+        el.innerHTML = d.tags.map(function(t){
+          return '<span class="tag" role="listitem">' + t + '</span>';
+        }).join('');
+      }
+    })
+    .catch(function(){});
+
+  /* ── SERVICES ── */
+  fetch('content/services.json')
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      setText('cms-services-label', d.label);
+      setText('cms-services-title', d.title);
+
+      var grid = document.getElementById('cms-services-grid');
+      if(grid && d.cards && d.cards.length){
+        var delays = ['reveal-d1','reveal-d2','reveal-d3','reveal-d4'];
+        grid.innerHTML = d.cards.map(function(c, i){
+          var laxId = 'lax-card-' + (i + 1);
+          var delay = delays[i] || '';
+          return '<article class="service-card reveal ' + delay + '" id="' + laxId + '">'
+            + '<div class="service-num" aria-hidden="true">' + c.num + '</div>'
+            + '<h3>' + c.title + '</h3>'
+            + '<p>' + c.description + '</p>'
+            + '<span class="service-tag">' + c.tag + '</span>'
+            + '</article>';
+        }).join('');
+
+        /* Re-observe new elements for reveal */
+        grid.querySelectorAll('.reveal').forEach(function(el){
+          revealObserver && revealObserver.observe(el);
+        });
+
+        /* Re-register lax on new cards (desktop only) */
+        if(typeof lax !== 'undefined' && window.innerWidth >= 768){
+          var offsets = [55,75,55,75];
+          d.cards.forEach(function(_, i){
+            var sel = '#lax-card-' + (i+1);
+            var off = offsets[i] || 55;
+            try {
+              lax.addElements(sel, {
+                scrollY:{ translateY:[['elInY - 80','elCenterY'],[off,0]] }
+              });
+            } catch(e){}
+          });
+        }
+      }
+    })
+    .catch(function(){});
+
+  /* ── PHILOSOPHY ── */
+  fetch('content/philosophy.json')
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      setText('cms-phil-label', d.label);
+      setText('cms-phil-quote', d.quote);
+      setText('cms-phil-cite',  d.cite);
+    })
+    .catch(function(){});
+
+  /* ── CONTACT ── */
+  fetch('content/contact.json')
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      setText('cms-contact-label', d.label);
+      setText('cms-contact-title', d.title);
+      setText('cms-contact-intro', d.intro);
+      setText('cms-contact-sub',   d.sub);
+      if(d.instagram){
+        var igEl = document.getElementById('cms-contact-ig');
+        if(igEl){
+          igEl.href = 'https://www.instagram.com/' + d.instagram;
+          /* Update visible handle text (last text node) */
+          igEl.childNodes.forEach(function(node){
+            if(node.nodeType === 3 && node.textContent.trim()){
+              node.textContent = '\n            @' + d.instagram + '\n          ';
+            }
+          });
+        }
+      }
+    })
+    .catch(function(){});
+
+  /* Keep reference to reveal observer so services can reuse it */
+  window.revealObserver = null;
+  document.addEventListener('DOMContentLoaded', function(){
+    window.revealObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          e.target.classList.add('visible');
+          window.revealObserver.unobserve(e.target);
+        }
+      });
+    },{threshold:0.08, rootMargin:'0px 0px -40px 0px'});
+  });
+})();
+</script>
+
+<!-- Netlify Identity: redirect to admin after login -->
+<script>
+if(window.netlifyIdentity){
+  window.netlifyIdentity.on('init', function(user){
+    if(!user){
+      window.netlifyIdentity.on('login', function(){
+        document.location.href = '/admin/';
+      });
+    }
+  });
+}
 </script>
 
 </body>
