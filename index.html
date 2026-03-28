@@ -194,9 +194,36 @@ img{display:block;max-width:100%;user-select:none;-webkit-user-select:none}
   font-size:clamp(3rem,10vw,9rem);
   line-height:.95;letter-spacing:-.025em;
   margin-bottom:clamp(1rem,2.5vw,1.75rem);
-  opacity:0;animation:fadeUp 1s ease forwards .4s
+  /* No global animation — each line animates independently */
 }
 .hero h1 em{font-style:italic;color:var(--accent)}
+
+/* ── Name line reveal ── */
+/* Each line is wrapped in .name-line (clips) > .name-inner (slides up) */
+.name-line{
+  display:block;
+  overflow:hidden;
+  /* Extra vertical room so descenders/ascenders aren't clipped */
+  padding-bottom:.08em;
+  margin-bottom:-.08em
+}
+.name-inner{
+  display:block;
+  transform:translateY(110%);
+  opacity:0
+}
+/* Staggered entrance — triggered by JS adding .name-animate to h1 */
+.hero h1.name-animate .name-inner{
+  animation:nameReveal .9s cubic-bezier(.22,.6,.36,1) forwards
+}
+.hero h1.name-animate .name-line:nth-child(1) .name-inner{ animation-delay:.25s }
+.hero h1.name-animate .name-line:nth-child(2) .name-inner{ animation-delay:.55s }
+.hero h1.name-animate .name-line:nth-child(3) .name-inner{ animation-delay:.85s }
+
+@keyframes nameReveal{
+  from{ transform:translateY(110%); opacity:0 }
+  to  { transform:translateY(0);    opacity:1 }
+}
 
 .hero-role{
   font-family:var(--display);font-weight:300;font-style:italic;
@@ -682,7 +709,11 @@ blockquote.philosophy-quote::before{
 
   <div class="hero-content">
     <p class="hero-overline" id="cms-hero-overline">Art Curator &ensp;·&ensp; Art Manager &ensp;·&ensp; Project Coordinator</p>
-    <h1 id="lax-h1"><span id="cms-hero-name1">Ludovica</span><br><em id="cms-hero-name2">Benedetta</em><br><span id="cms-hero-name3">Dagna</span></h1>
+    <h1 id="lax-h1">
+      <span class="name-line"><span class="name-inner" id="cms-hero-name1">Ludovica</span></span>
+      <span class="name-line"><em class="name-inner" id="cms-hero-name2">Benedetta</em></span>
+      <span class="name-line"><span class="name-inner" id="cms-hero-name3">Dagna</span></span>
+    </h1>
     <p class="hero-role" id="lax-sub">
       <span id="cms-hero-role">Contemporary Art &nbsp;&mdash;&nbsp; Exhibition Curatorship &nbsp;&mdash;&nbsp; Cultural Mediation</span>
     </p>
@@ -930,6 +961,13 @@ blockquote.philosophy-quote::before{
      SCRIPTS
 ══════════════════════════ -->
 <script>
+/* ── Name reveal trigger ── */
+(function(){
+  /* Small delay so browser has painted and CSS is ready */
+  var h1 = document.getElementById('lax-h1');
+  if(h1) setTimeout(function(){ h1.classList.add('name-animate'); }, 80);
+})();
+
 /* ── Nav scroll ── */
 (function(){
   var nav = document.getElementById('nav');
@@ -1000,11 +1038,15 @@ blockquote.philosophy-quote::before{
     lax.init();
     lax.addDriver('scrollY', function(){ return window.scrollY; });
 
-    /* Hero title */
-    lax.addElements('#lax-h1', {
-      scrollY:{
-        translateY:[[0,600],[0, isMobile ? -40 : -90]]
-      }
+    /* Hero name lines — parallax lieve e staggered durante lo scroll */
+    lax.addElements('#lax-h1 .name-line:nth-child(1)', {
+      scrollY:{ translateY:[[0,600],[0,-100]] }
+    });
+    lax.addElements('#lax-h1 .name-line:nth-child(2)', {
+      scrollY:{ translateY:[[0,600],[0,-70]] }
+    });
+    lax.addElements('#lax-h1 .name-line:nth-child(3)', {
+      scrollY:{ translateY:[[0,600],[0,-40]] }
     });
 
     /* Hero subtitle */
