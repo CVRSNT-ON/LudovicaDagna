@@ -1099,74 +1099,117 @@ blockquote.philosophy-quote::before{
     });
 
     /* ───────────────────────────────────────────
-       ABOUT — effetti coordinati tra foto e testo
+       ABOUT — scaleIn · scaleOut · scaleInOut
+
+       Ritratto:   scaleInOut — cresce entrando, si
+                   rimpicciolisce uscendo (0.75→1→0.75)
+                   + blurIn per messa a fuoco fotografica
+
+       Cornice:    scaleIn da destra — entra crescendo
+
+       Label:      scaleIn sottile + slideX editoriale
+
+       Titolo h2:  scaleInOut — il pezzo più importante
+                   della sezione pulsa al centro schermo
+
+       Paragrafi:  scaleIn staggered (0.9→1) — discreto,
+                   come pagine di un libro che si aprono
+
+       Stats:      scaleIn con easeOutBounce — i simboli
+                   balzano nel loro pieno formato
     ─────────────────────────────────────────── */
 
-    /* Ritratto: entra dal basso + blurIn (4px→0) — la foto
-       si mette a fuoco mentre arriva, effetto raffinato */
+    /* Ritratto: scaleInOut (0.75 → 1 → 0.75) + blurIn */
     lax.addElements('#lax-portrait', {
       scrollY:{
-        translateY:[['elInY','elCenterY'],[50,0],{easing:'easeOutCubic'}],
-        blur:[['elInY','elInY+300'],[5,0]]
+        scale:[
+          ['elInY+elHeight','elCenterY','elOutY-elHeight'],
+          [0.75, 1, 0.75],
+          {easing:'easeInOutCubic'}
+        ],
+        blur:[
+          ['elInY+elHeight','elCenterY'],
+          [6, 0]
+        ],
+        opacity:[
+          ['elInY+elHeight','elInY+elHeight+150'],
+          [0, 1]
+        ]
       }
     });
 
-    /* Cornice decorativa — slideX da destra, opposta al ritratto
-       → entrata incrociata: ritratto su + cornice da destra */
+    /* Cornice decorativa: scaleIn da 0 — cresce entrando */
     lax.addElements('.about-portrait-deco', {
       scrollY:{
-        translateX:[['elInY','elCenterY'],[60,0],{easing:'easeOutCubic'}],
-        opacity:[['elInY','elInY+200'],[0,1]]
+        scale:[
+          ['elInY+elHeight','elCenterY'],
+          [0, 1],
+          {easing:'easeOutBack'}
+        ],
+        opacity:[['elInY+elHeight','elInY+elHeight+200'],[0,1]]
       }
     });
 
-    /* Label "The Curator" — slideX da sinistra, editoriale */
+    /* Label "The Curator": scaleIn leggero + slideX */
     lax.addElements('#cms-about-label', {
       scrollY:{
-        translateX:[['elInY','elCenterY'],[-40,0],{easing:'easeOutQuad'}],
-        opacity:[['elInY','elInY+180'],[0,1]]
+        scale:[
+          ['elInY+elHeight','elCenterY'],
+          [0.7, 1],
+          {easing:'easeOutQuad'}
+        ],
+        translateX:[['elInY+elHeight','elCenterY'],[-40,0]],
+        opacity:[['elInY+elHeight','elInY+elHeight+180'],[0,1]]
       }
     });
 
-    /* Titolo About — skewX micro (3°→0) + fadeIn
-       Cormorant Garamond a grande dimensione con micro-skew
-       dà un'eleganza editoriale molto contemporanea */
+    /* Titolo h2: scaleInOut — il cuore della sezione
+       scala da 0.82 → 1 → 0.82 mentre attraversa lo schermo */
     lax.addElements('#cms-about-title', {
       scrollY:{
-        skewX:[['elInY','elCenterY'],[3,0],{easing:'easeOutCubic'}],
-        translateX:[['elInY','elCenterY'],[-30,0],{easing:'easeOutCubic'}],
-        opacity:[['elInY','elInY+200'],[0,1]]
+        scale:[
+          ['elInY+elHeight','elCenterY-50','elCenterY','elCenterY+50','elOutY-elHeight'],
+          [0.82, 1, 1, 1, 0.82],
+          {easing:'easeInOutQuart'}
+        ],
+        opacity:[
+          ['elInY+elHeight','elCenterY-100','elCenterY+100','elOutY-elHeight'],
+          [0, 1, 1, 0]
+        ]
       }
     });
 
-    /* Paragrafi bio — fadeIn staggered leggero */
+    /* Paragrafi: scaleIn staggered (0.92→1) — discreto */
     lax.addElements('#cms-about-p1', {
       scrollY:{
-        translateY:[['elInY','elCenterY'],[25,0],{easing:'easeOutQuad'}],
-        opacity:[['elInY','elInY+200'],[0,1]]
+        scale:[['elInY+elHeight','elCenterY'],[0.92,1],{easing:'easeOutQuad'}],
+        translateY:[['elInY+elHeight','elCenterY'],[20,0]],
+        opacity:[['elInY+elHeight','elInY+elHeight+200'],[0,1]]
       }
     });
     lax.addElements('#cms-about-p2', {
       scrollY:{
-        translateY:[['elInY','elCenterY'],[30,0],{easing:'easeOutQuad'}],
-        opacity:[['elInY','elInY+200'],[0,1]]
+        scale:[['elInY+elHeight','elCenterY'],[0.92,1],{easing:'easeOutQuad'}],
+        translateY:[['elInY+elHeight','elCenterY'],[25,0]],
+        opacity:[['elInY+elHeight','elInY+elHeight+200'],[0,1]]
       }
     });
     lax.addElements('#cms-about-p3', {
       scrollY:{
-        translateY:[['elInY','elCenterY'],[35,0],{easing:'easeOutQuad'}],
-        opacity:[['elInY','elInY+200'],[0,1]]
+        scale:[['elInY+elHeight','elCenterY'],[0.92,1],{easing:'easeOutQuad'}],
+        translateY:[['elInY+elHeight','elCenterY'],[30,0]],
+        opacity:[['elInY+elHeight','elInY+elHeight+200'],[0,1]]
       }
     });
     lax.addElements('#cms-about-p4', {
       scrollY:{
-        translateY:[['elInY','elCenterY'],[40,0],{easing:'easeOutQuad'}],
-        opacity:[['elInY','elInY+200'],[0,1]]
+        scale:[['elInY+elHeight','elCenterY'],[0.92,1],{easing:'easeOutQuad'}],
+        translateY:[['elInY+elHeight','elCenterY'],[35,0]],
+        opacity:[['elInY+elHeight','elInY+elHeight+200'],[0,1]]
       }
     });
 
-    /* Stats (IT, 360°, ∞) — scaleIn con easeOutBounce
-       I numeri/simboli rimbalzano: vivaci ma non esagerati */
+    /* Stats: scaleIn con easeOutBounce — i simboli rimbalzano */
     lax.addElements('.about-stat-num', {
       scrollY:{
         scale:[['elInY','elCenterY'],[0,1],{easing:'easeOutBounce'}],
@@ -1175,8 +1218,9 @@ blockquote.philosophy-quote::before{
     });
     lax.addElements('.about-stat-lbl', {
       scrollY:{
+        scale:[['elInY','elCenterY'],[0.7,1],{easing:'easeOutQuad'}],
         opacity:[['elInY','elCenterY'],[0,1]],
-        translateY:[['elInY','elCenterY'],[12,0]]
+        translateY:[['elInY','elCenterY'],[10,0]]
       }
     });
 
