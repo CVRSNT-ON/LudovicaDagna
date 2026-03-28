@@ -199,13 +199,12 @@ img{display:block;max-width:100%;user-select:none;-webkit-user-select:none}
 .hero h1 em{font-style:italic;color:var(--accent)}
 
 /* ── Name line reveal ── */
-/* Each line is wrapped in .name-line (clips) > .name-inner (slides up) */
 .name-line{
   display:block;
   overflow:hidden;
-  /* Extra vertical room so descenders/ascenders aren't clipped */
-  padding-bottom:.08em;
-  margin-bottom:-.08em
+  /* Generous descender room — Cormorant 'g','y','p' at large sizes need ~0.3em */
+  padding-bottom:.32em;
+  margin-bottom:-.32em
 }
 .name-inner{
   display:block;
@@ -749,14 +748,14 @@ blockquote.philosophy-quote::before{
 
     <!-- Bio -->
     <div class="about-text">
-      <p class="section-label reveal" id="cms-about-label">The Curator</p>
-      <h2 class="section-title reveal reveal-d1" id="cms-about-title">Curatorship as a Form<br>of <em>Mediation</em></h2>
-      <p class="lead reveal reveal-d2" id="cms-about-p1">Ludovica Benedetta Dagna is an Art Curator, Art Manager, and Project Coordinator working in the field of contemporary art.</p>
-      <p class="reveal reveal-d2" id="cms-about-p2">Her practice focuses on the development and realization of exhibition projects, overseeing each stage of the curatorial and organizational process — from concept definition and artist selection to the final production of the exhibition. Her approach combines critical sensitivity, curatorial vision, and operational precision.</p>
-      <p class="reveal reveal-d3" id="cms-about-p3">Throughout her career she has collaborated with artists, cultural partners, and institutions, developing expertise across curatorial planning, content development, project coordination, and exhibition logistics. Her work is distinguished by a strong commitment to supporting artistic research through carefully structured exhibition narratives.</p>
-      <p class="reveal reveal-d3" id="cms-about-p4">Alongside her curatorial activity, she works as an Art Manager, assisting artists in the development, positioning, and communication of their professional practice. She has established international collaborations in digital curation, connecting contemporary art with digital strategy and online representation.</p>
+      <p class="section-label" id="cms-about-label">The Curator</p>
+      <h2 class="section-title" id="cms-about-title">Curatorship as a Form<br>of <em>Mediation</em></h2>
+      <p class="lead" id="cms-about-p1">Ludovica Benedetta Dagna is an Art Curator, Art Manager, and Project Coordinator working in the field of contemporary art.</p>
+      <p id="cms-about-p2">Her practice focuses on the development and realization of exhibition projects, overseeing each stage of the curatorial and organizational process — from concept definition and artist selection to the final production of the exhibition. Her approach combines critical sensitivity, curatorial vision, and operational precision.</p>
+      <p id="cms-about-p3">Throughout her career she has collaborated with artists, cultural partners, and institutions, developing expertise across curatorial planning, content development, project coordination, and exhibition logistics. Her work is distinguished by a strong commitment to supporting artistic research through carefully structured exhibition narratives.</p>
+      <p id="cms-about-p4">Alongside her curatorial activity, she works as an Art Manager, assisting artists in the development, positioning, and communication of their professional practice. She has established international collaborations in digital curation, connecting contemporary art with digital strategy and online representation.</p>
 
-      <div class="about-stats reveal reveal-d4" id="cms-about-stats">
+      <div class="about-stats" id="cms-about-stats">
         <div>
           <div class="about-stat-num">IT</div>
           <div class="about-stat-lbl">International Reach</div>
@@ -800,7 +799,7 @@ blockquote.philosophy-quote::before{
      SERVICES
 ══════════════════════════ -->
 <section id="services" class="services-section" aria-label="Services">
-  <div class="services-header reveal">
+  <div class="services-header">
     <p class="section-label" id="cms-services-label">What I Do</p>
     <h2 class="section-title" id="cms-services-title">Services</h2>
   </div>
@@ -844,8 +843,8 @@ blockquote.philosophy-quote::before{
 <section id="philosophy" class="philosophy-section" aria-label="Philosophy">
   <div class="philosophy-bg" id="lax-phil-bg" aria-hidden="true">vision</div>
   <div class="philosophy-inner">
-    <p class="section-label reveal" id="cms-phil-label" style="text-align:center">Philosophy</p>
-    <blockquote class="philosophy-quote reveal reveal-d1">
+    <p class="section-label" id="cms-phil-label" style="text-align:center">Philosophy</p>
+    <blockquote class="philosophy-quote">
       <span id="cms-phil-quote">Curatorship is not only a cultural and critical practice, but also a form of mediation between concept, production, and visibility — one capable of transforming both physical and digital spaces into meaningful platforms for artistic dialogue.</span>
       <cite class="philosophy-cite" id="cms-phil-cite">— Ludovica Benedetta Dagna</cite>
     </blockquote>
@@ -858,8 +857,8 @@ blockquote.philosophy-quote::before{
 ══════════════════════════ -->
 <section id="contact" aria-label="Contact">
   <div class="contact-inner">
-    <p class="section-label reveal" id="cms-contact-label">Get in Touch</p>
-    <h2 class="section-title reveal reveal-d1" id="cms-contact-title">Let's Work Together</h2>
+    <p class="section-label" id="cms-contact-label">Get in Touch</p>
+    <h2 class="section-title" id="cms-contact-title">Let's Work Together</h2>
 
     <div class="contact-grid">
 
@@ -1027,90 +1026,279 @@ blockquote.philosophy-quote::before{
   els.forEach(function(el){ obs.observe(el); });
 })();
 
-/* ── lax.js parallax — disabled on mobile/reduced motion ── */
+/* ── lax.js — disabled on mobile (<768px) and prefers-reduced-motion ── */
 (function(){
   var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var isMobile = window.innerWidth < 768;
-
   if(prefersReduced || typeof lax === 'undefined') return;
 
   window.addEventListener('load', function(){
     lax.init();
     lax.addDriver('scrollY', function(){ return window.scrollY; });
 
-    /* Hero name lines — parallax lieve e staggered durante lo scroll */
+    /* ───────────────────────────────────────────
+       HERO — depth parallax sui tre livelli del nome
+       Ogni riga si muove a velocità diversa creando
+       senso di profondità mentre si scrolla via
+    ─────────────────────────────────────────── */
     lax.addElements('#lax-h1 .name-line:nth-child(1)', {
       scrollY:{ translateY:[[0,600],[0,-100]] }
     });
     lax.addElements('#lax-h1 .name-line:nth-child(2)', {
-      scrollY:{ translateY:[[0,600],[0,-70]] }
+      scrollY:{ translateY:[[0,600],[0,-65]] }
     });
     lax.addElements('#lax-h1 .name-line:nth-child(3)', {
-      scrollY:{ translateY:[[0,600],[0,-40]] }
+      scrollY:{ translateY:[[0,600],[0,-35]] }
     });
 
-    /* Hero subtitle */
-    lax.addElements('#lax-sub', {
+    /* Hero overline — slideX da sinistra mentre scrolla su */
+    lax.addElements('#cms-hero-overline', {
       scrollY:{
-        translateY:[[0,600],[0, isMobile ? -25 : -50]]
+        translateX:[[0,500],[0,-60]],
+        opacity:[[0,400],[1,0]]
       }
     });
 
-    if(!isMobile){
-      /* Background blobs */
-      lax.addElements('#lax-blob-1', {
-        scrollY:{
-          translateY:[[0,900],[0,-230]],
-          scale:[[0,900],[1,1.18]]
-        }
-      });
-      lax.addElements('#lax-blob-2', {
-        scrollY:{
-          translateY:[[0,900],[0,-130]]
-        }
-      });
-      lax.addElements('#lax-blob-3', {
-        scrollY:{
-          translateY:[[0,900],[0,-80]]
-        }
-      });
+    /* Hero subtitle — translateY + fade out */
+    lax.addElements('#lax-sub', {
+      scrollY:{
+        translateY:[[0,600],[0,-50]],
+        opacity:[[0,500],[1,0]]
+      }
+    });
 
-      /* Hero monogram */
-      lax.addElements('#lax-monogram', {
-        scrollY:{
-          translateY:[[0,700],[0,-260]],
-          rotate:[[0,700],[0,-5]],
-          opacity:[[0,350],[1,0]]
-        }
-      });
+    /* Hero CTA — scaleIn con easeOutBack: pop elegante */
+    lax.addElements('.hero-cta-wrap', {
+      scrollY:{
+        opacity:[[0,500],[1,0]],
+        translateY:[[0,500],[0,-30]]
+      }
+    });
 
-      /* About portrait */
-      lax.addElements('#lax-portrait', {
-        scrollY:{
-          translateY:[['elInY','elCenterY'],[40,0]]
-        }
-      });
+    /* Background blobs — parallax profondità */
+    lax.addElements('#lax-blob-1', {
+      scrollY:{
+        translateY:[[0,900],[0,-230]],
+        scale:[[0,900],[1,1.18]]
+      }
+    });
+    lax.addElements('#lax-blob-2', {
+      scrollY:{ translateY:[[0,900],[0,-130]] }
+    });
+    lax.addElements('#lax-blob-3', {
+      scrollY:{ translateY:[[0,900],[0,-80]] }
+    });
 
-      /* Philosophy background word */
-      lax.addElements('#lax-phil-bg', {
-        scrollY:{
-          translateX:[['elInY','elOutY'],[-100,100]]
-        }
-      });
+    /* Monogramma LD di sfondo — sale + ruota + svanisce */
+    lax.addElements('#lax-monogram', {
+      scrollY:{
+        translateY:[[0,700],[0,-280]],
+        rotate:[[0,700],[0,-6]],
+        opacity:[[0,300],[1,0]]
+      }
+    });
 
-      /* Service cards — staggered lift */
-      var cardOffsets = {
-        '#lax-card-1':55, '#lax-card-2':75,
-        '#lax-card-3':55, '#lax-card-4':75
-      };
-      Object.keys(cardOffsets).forEach(function(sel){
-        lax.addElements(sel, {
-          scrollY:{
-            translateY:[['elInY - 80','elCenterY'],[cardOffsets[sel],0]]
-          }
-        });
-      });
-    }
+    /* ───────────────────────────────────────────
+       ABOUT — effetti coordinati tra foto e testo
+    ─────────────────────────────────────────── */
+
+    /* Ritratto: entra dal basso + blurIn (4px→0) — la foto
+       si mette a fuoco mentre arriva, effetto raffinato */
+    lax.addElements('#lax-portrait', {
+      scrollY:{
+        translateY:[['elInY','elCenterY'],[50,0],{easing:'easeOutCubic'}],
+        blur:[['elInY','elInY+300'],[5,0]]
+      }
+    });
+
+    /* Cornice decorativa — slideX da destra, opposta al ritratto
+       → entrata incrociata: ritratto su + cornice da destra */
+    lax.addElements('.about-portrait-deco', {
+      scrollY:{
+        translateX:[['elInY','elCenterY'],[60,0],{easing:'easeOutCubic'}],
+        opacity:[['elInY','elInY+200'],[0,1]]
+      }
+    });
+
+    /* Label "The Curator" — slideX da sinistra, editoriale */
+    lax.addElements('#cms-about-label', {
+      scrollY:{
+        translateX:[['elInY','elCenterY'],[-40,0],{easing:'easeOutQuad'}],
+        opacity:[['elInY','elInY+180'],[0,1]]
+      }
+    });
+
+    /* Titolo About — skewX micro (3°→0) + fadeIn
+       Cormorant Garamond a grande dimensione con micro-skew
+       dà un'eleganza editoriale molto contemporanea */
+    lax.addElements('#cms-about-title', {
+      scrollY:{
+        skewX:[['elInY','elCenterY'],[3,0],{easing:'easeOutCubic'}],
+        translateX:[['elInY','elCenterY'],[-30,0],{easing:'easeOutCubic'}],
+        opacity:[['elInY','elInY+200'],[0,1]]
+      }
+    });
+
+    /* Paragrafi bio — fadeIn staggered leggero */
+    lax.addElements('#cms-about-p1', {
+      scrollY:{
+        translateY:[['elInY','elCenterY'],[25,0],{easing:'easeOutQuad'}],
+        opacity:[['elInY','elInY+200'],[0,1]]
+      }
+    });
+    lax.addElements('#cms-about-p2', {
+      scrollY:{
+        translateY:[['elInY','elCenterY'],[30,0],{easing:'easeOutQuad'}],
+        opacity:[['elInY','elInY+200'],[0,1]]
+      }
+    });
+    lax.addElements('#cms-about-p3', {
+      scrollY:{
+        translateY:[['elInY','elCenterY'],[35,0],{easing:'easeOutQuad'}],
+        opacity:[['elInY','elInY+200'],[0,1]]
+      }
+    });
+    lax.addElements('#cms-about-p4', {
+      scrollY:{
+        translateY:[['elInY','elCenterY'],[40,0],{easing:'easeOutQuad'}],
+        opacity:[['elInY','elInY+200'],[0,1]]
+      }
+    });
+
+    /* Stats (IT, 360°, ∞) — scaleIn con easeOutBounce
+       I numeri/simboli rimbalzano: vivaci ma non esagerati */
+    lax.addElements('.about-stat-num', {
+      scrollY:{
+        scale:[['elInY','elCenterY'],[0,1],{easing:'easeOutBounce'}],
+        opacity:[['elInY','elInY+150'],[0,1]]
+      }
+    });
+    lax.addElements('.about-stat-lbl', {
+      scrollY:{
+        opacity:[['elInY','elCenterY'],[0,1]],
+        translateY:[['elInY','elCenterY'],[12,0]]
+      }
+    });
+
+    /* ───────────────────────────────────────────
+       SERVICES — blurIn sul titolo + lift sulle card
+    ─────────────────────────────────────────── */
+
+    /* Titolo sezione — blurIn: appare come messa a fuoco */
+    lax.addElements('#cms-services-title', {
+      scrollY:{
+        blur:[['elInY','elCenterY'],[8,0],{easing:'easeOutQuint'}],
+        opacity:[['elInY','elInY+200'],[0,1]],
+        translateY:[['elInY','elCenterY'],[20,0]]
+      }
+    });
+    lax.addElements('#cms-services-label', {
+      scrollY:{
+        translateX:[['elInY','elCenterY'],[-30,0],{easing:'easeOutQuad'}],
+        opacity:[['elInY','elInY+150'],[0,1]]
+      }
+    });
+
+    /* Card servizi — staggered translateY, alternanza sinistra/destra
+       card 1 e 3 da sinistra, 2 e 4 da destra */
+    lax.addElements('#lax-card-1', {
+      scrollY:{
+        translateY:[['elInY - 80','elCenterY'],[55,0],{easing:'easeOutCubic'}],
+        translateX:[['elInY - 80','elCenterY'],[-25,0]],
+        opacity:[['elInY - 80','elInY+100'],[0,1]]
+      }
+    });
+    lax.addElements('#lax-card-2', {
+      scrollY:{
+        translateY:[['elInY - 80','elCenterY'],[75,0],{easing:'easeOutCubic'}],
+        translateX:[['elInY - 80','elCenterY'],[25,0]],
+        opacity:[['elInY - 80','elInY+100'],[0,1]]
+      }
+    });
+    lax.addElements('#lax-card-3', {
+      scrollY:{
+        translateY:[['elInY - 80','elCenterY'],[55,0],{easing:'easeOutCubic'}],
+        translateX:[['elInY - 80','elCenterY'],[-25,0]],
+        opacity:[['elInY - 80','elInY+100'],[0,1]]
+      }
+    });
+    lax.addElements('#lax-card-4', {
+      scrollY:{
+        translateY:[['elInY - 80','elCenterY'],[75,0],{easing:'easeOutCubic'}],
+        translateX:[['elInY - 80','elCenterY'],[25,0]],
+        opacity:[['elInY - 80','elInY+100'],[0,1]]
+      }
+    });
+
+    /* ───────────────────────────────────────────
+       PHILOSOPHY — blurInOut sulla citazione
+       È la scelta più cinematografica: il testo
+       è sfocato ai bordi del viewport e diventa
+       perfettamente nitido solo al centro — come
+       un pensiero che prende forma.
+    ─────────────────────────────────────────── */
+
+    /* Sfondo "vision" — drift orizzontale + leggero scale */
+    lax.addElements('#lax-phil-bg', {
+      scrollY:{
+        translateX:[['elInY','elOutY'],[-110,110]],
+        scale:[['elInY','elCenterY','elOutY'],[0.9,1.06,0.9]]
+      }
+    });
+
+    /* Citazione — blurInOut: nasce sfocata, diventa nitida
+       al centro schermo, si ri-sfoca uscendo */
+    lax.addElements('.philosophy-quote', {
+      scrollY:{
+        blur:[
+          ['elInY+elHeight','elCenterY-80','elCenterY','elCenterY+80','elOutY-elHeight'],
+          [10, 0, 0, 0, 10],
+          {easing:'easeInOutQuint'}
+        ],
+        opacity:[
+          ['elInY+elHeight','elCenterY-120','elCenterY+120','elOutY-elHeight'],
+          [0, 1, 1, 0]
+        ]
+      }
+    });
+
+    /* Firma citazione — fadeIn ritardato + slideX
+       Appare dopo il testo, come una vera firma */
+    lax.addElements('.philosophy-cite', {
+      scrollY:{
+        translateX:[['elCenterY - 200','elCenterY'],[40,0],{easing:'easeOutQuad'}],
+        opacity:[['elCenterY - 200','elCenterY - 50'],[0,1]]
+      }
+    });
+
+    /* ───────────────────────────────────────────
+       CONTACT — slideX + fadeIn coerenti con About
+    ─────────────────────────────────────────── */
+    lax.addElements('#cms-contact-label', {
+      scrollY:{
+        translateX:[['elInY','elCenterY'],[-30,0],{easing:'easeOutQuad'}],
+        opacity:[['elInY','elInY+180'],[0,1]]
+      }
+    });
+    lax.addElements('#cms-contact-title', {
+      scrollY:{
+        skewX:[['elInY','elCenterY'],[2,0],{easing:'easeOutCubic'}],
+        translateX:[['elInY','elCenterY'],[-20,0]],
+        opacity:[['elInY','elInY+200'],[0,1]]
+      }
+    });
+
+    /* ───────────────────────────────────────────
+       FOOTER LOGO — spin lentissimo continuo
+       Rotazione appena percettibile: 1 giro ogni
+       ~25 secondi di scroll. Touch di brand raffinato.
+    ─────────────────────────────────────────── */
+    lax.addElements('.footer-logo', {
+      scrollY:{
+        rotate:[[0,20000],[0,360],{modValue:20000}]
+      }
+    });
+
   });
 })();
 
